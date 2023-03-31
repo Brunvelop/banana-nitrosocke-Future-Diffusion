@@ -14,17 +14,21 @@ def inference(model_inputs:dict) -> dict:
     global model
 
     # Parse out your arguments
-    prompt = model_inputs.get('prompt', None)
+    prompt = "future style "+ model_inputs.get('prompt', None) +" cinematic lights, trending on artstation, avengers endgame, emotional"
+    negative_prompt="duplicate heads bad anatomy extra legs text"
+    height=64*6 
+    width=64*6
     if prompt == None:
         return {'message': "No prompt provided"}
     
     # Run the model
-    
-    image = model.generate_image(prompt)
+    image = model.generate_image(prompt, negative_prompt, height, width)
 
+    # Resize output and conver to base64
+    image = image.resize((250, 250))
     buffered = BytesIO()
     image.save(buffered, format="JPEG")
-    img_str = str(base64.b64encode(buffered.getvalue()))
+    image_64 = str(base64.b64encode(buffered.getvalue()))[2:-1]
 
     # Return the results as a dictionary
-    return {"img_str":img_str}
+    return {"image_64":image_64}

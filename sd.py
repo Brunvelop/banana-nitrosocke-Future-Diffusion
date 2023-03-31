@@ -6,8 +6,8 @@ print(torch.version.cuda)
 print(torch.cuda.is_available())
 
 class StableDifussion2():
-    def __init__(self, model_id, mode=None, savety_mode=False):
-        self.pipe = self.load_model(model_id, mode, savety_mode)
+    def __init__(self, model_id, mode=None, savety_mode=False, device="cuda"):
+        self.pipe = self.load_model(model_id, mode, savety_mode, device)
     
     def load_model(self, model_id, mode=None, savety_mode=False, device="cuda"):
         pipe = DiffusionPipeline.from_pretrained(
@@ -33,7 +33,7 @@ class StableDifussion2():
 
 
     def generate_image(
-            self, prompt, height=512, width=512, seed=None,
+            self, prompt, negative_prompt, height=512, width=512, seed=None,
             num_inference_steps=20, guidance_scale = 7.5,
         ):
 
@@ -44,7 +44,7 @@ class StableDifussion2():
                     width = width,
                     num_inference_steps = num_inference_steps,
                     guidance_scale = guidance_scale,
-                    # negative_prompt,
+                    negative_prompt=negative_prompt,
                     num_images_per_prompt = 1,
                     return_dict=False,
                     latents = latent

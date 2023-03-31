@@ -19,6 +19,8 @@ ADD server.py .
 ADD download.py .
 RUN python3 download.py
 
+# Add custom diffusers wrapper
+ADD sd.py .
 
 # Add your custom app code, init() and inference()
 ADD app.py .
