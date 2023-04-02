@@ -35,8 +35,8 @@ def inference(model_inputs:dict) -> dict:
     latent = _generate_latent(64*6, 64*6)
     images = model(
         prompt = "future style "+ model_inputs.get('prompt', None) +" cinematic lights, trending on artstation, avengers endgame, emotional",
-        height=64*6,
-        width=64*6,
+        height=64*7,
+        width=64*7,
         num_inference_steps = 20,
         guidance_scale = 7.5,
         negative_prompt="duplicate heads bad anatomy extra legs text",
@@ -47,7 +47,7 @@ def inference(model_inputs:dict) -> dict:
     image = images[0][0]
     
     # Resize output and conver to base64
-    image = image.resize((250, 250))
+    # image = image.resize((250, 250))
     buffered = BytesIO()
     image.save(buffered, format="JPEG")
     image_base64 = str(base64.b64encode(buffered.getvalue()))[2:-1]
