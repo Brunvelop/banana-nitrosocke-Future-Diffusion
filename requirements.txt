@@ -3,3 +3,4 @@ transformers
 accelerate
 diffusers
 chardet
+websockets==10.0
